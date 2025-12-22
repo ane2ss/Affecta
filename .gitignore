@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env/
+
+# Excel & Data
+backend/data/affectations.json
+backend/temp/
+*.xlsx
+*.zip
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store

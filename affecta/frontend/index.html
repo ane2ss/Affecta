@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affecta - Finance Tool</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="/static/logo.jpg">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="/static/logo.jpg" alt="Affecta Logo" class="logo-img">
+            </div>
+            <nav>
+                <button class="nav-item active" data-tab="affectations">
+                    <span class="material-icons">people</span>
+                    Gestion des Affectations
+                </button>
+                <button class="nav-item" data-tab="processing">
+                    <span class="material-icons">folder_zip</span>
+                    Traitement Fichier
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Version 1.2</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Tab: Affectations -->
+            <section id="tab-affectations" class="tab-content active">
+                <header class="page-header">
+                    <h1>Gestion des Affectations</h1>
+                    <p>Gérez la correspondance entre les agents et leurs communes.</p>
+                </header>
+
+                <div class="card">
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <span class="material-icons">search</span>
+                            <input type="text" id="filter-affectation" placeholder="Filtrer par commune ou nom...">
+                        </div>
+                        <div class="actions">
+                            <button id="export-btn" class="btn secondary" title="Exporter en Excel">
+                                <span class="material-icons">download</span> Exporter
+                            </button>
+                            <button id="delete-all-btn" class="btn secondary error-text" title="Tout supprimer">
+                                <span class="material-icons">delete_forever</span> Tout supprimer
+                            </button>
+                            <label for="affectation-upload" class="btn secondary">
+                                <span class="material-icons">upload_file</span> Importer Excel
+                                <input type="file" id="affectation-upload" accept=".xlsx" hidden>
+                            </label>
+                            <button id="add-btn" class="btn primary">
+                                <span class="material-icons">add</span> Ajouter
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bulk Action Bar -->
+                    <div id="bulk-bar" class="bulk-bar hidden">
+                        <span id="selected-count">0 sélectionné(s)</span>
+                        <div class="bulk-actions">
+                            <button id="bulk-commune-btn" class="btn secondary small">Changer Commune</button>
+                            <button id="bulk-delete-btn" class="btn error small">Supprimer</button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="affectation-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px;"><input type="checkbox" id="select-all-chk"></th>
+                                    <th>Nom Agent</th>
+                                    <th>Commune</th>
+                                    <th style="width: 100px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination">
+                        <span id="count-display">0 entrées</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Processing -->
+            <section id="tab-processing" class="tab-content">
+                <header class="page-header">
+                    <h1>Traitement du Fichier Principal</h1>
+                    <p>Générez les fichiers Excel par commune.</p>
+                </header>
+
+                <div class="card">
+                    <div class="upload-area" id="drop-zone">
+                        <span class="material-icons icon-large">cloud_upload</span>
+                        <h3>Glissez votre fichier Excel ici</h3>
+                        <p>ou cliquez pour sélectionner</p>
+                        <input type="file" id="main-upload" accept=".xlsx" hidden>
+                        <div id="file-info" class="file-info hidden">
+                            <span class="material-icons">description</span>
+                            <span id="file-name">filename.xlsx</span>
+                            <button id="remove-file" class="icon-btn"><span class="material-icons">close</span></button>
+                        </div>
+                    </div>
+
+                    <div class="filter-section hidden" id="generation-filters">
+                        <h3>Filtrer les communes à générer (Optionnel)</h3>
+                        <div class="filter-controls">
+                            <button id="select-all-btn" class="btn text-btn">Tout sélectionner</button>
+                            <button id="deselect-all-btn" class="btn text-btn">Tout désélectionner</button>
+                        </div>
+                        <div id="commune-checkboxes" class="checkbox-grid">
+                            <!-- Checkboxes injected here -->
+                        </div>
+                    </div>
+
+                    <div class="process-actions">
+                        <button id="generate-btn" class="btn primary large" disabled>
+                            <span class="material-icons">play_arrow</span> Générer les fichiers
+                        </button>
+                        <a id="download-btn" class="btn success large hidden" href="#">
+                            <span class="material-icons">download</span> Télécharger le ZIP
+                        </a>
+                    </div>
+
+                    <div id="status-msg" class="status-msg"></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ajouter / Modifier</h3>
+                <button id="close-modal" class="icon-btn"><span class="material-icons">close</span></button>
+            </div>
+            <form id="modal-form">
+                <div class="form-group">
+                    <label>Nom Agent</label>
+                    <input type="text" id="input-name" required placeholder="Ex: NOM PRENOM">
+                </div>
+                <div class="form-group">
+                    <label>Commune</label>
+                    <input type="text" id="input-commune" required placeholder="Ex: ALGER CENTRE">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancel-btn" class="btn secondary">Annuler</button>
+                    <button type="submit" class="btn primary">Sauvegarder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>

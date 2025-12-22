@@ -1,4 +1,4 @@
-# Affecta
+# Affecta ![Affecta Logo](https://link-to-your-image.com/logo.png)
 
 Affecta is a local web application designed for finance teams to split large Excel files into multiple smaller files based on "Commune" using an editable mapping.
 

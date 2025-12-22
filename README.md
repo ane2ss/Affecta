@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./frontend/logo.jpg" width="250" alt="Affecta Logo">
+  <img src="[./frontend/logo.jpg](https://github.com/ane2ss/Affecta/blob/main/affecta/frontend/logo.jpg)" width="250" alt="Affecta Logo">
 </p>
 
 # Affecta

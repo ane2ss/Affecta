@@ -61,7 +61,7 @@ Affecta is a local web application designed for finance teams to split large Exc
 
 ### 2. Traitement du Fichier Principal
 - Navigate to the "Traitement Fichier" tab.
-- **Upload**: Drag and drop your main Excel file (must contain `Nom majuscule Agent`).
+- **Upload**: Drag and drop your main Excel file (must contain `Nom majuscule`).
 - **Filter**: (Optional) Uncheck communes you don't want to generate files for.
 - **Generate**: Click "Générer les fichiers".
 - **Download**: Once processing is complete, click "Télécharger le ZIP".
